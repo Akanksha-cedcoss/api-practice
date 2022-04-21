@@ -4,12 +4,6 @@ namespace MyApp\Controllers;
 use Phalcon\Mvc\Controller;
 use Phalcon\Http\Response;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use Phalcon\Exception;
-use Phalcon\Security\JWT\Token\Parser;
-use Phalcon\Security\JWT\Validator;
-use Phalcon\Security\JWT\Builder;
-use Phalcon\Security\JWT\Signer\Hmac;
 
 /**
  * @property Response $response
@@ -27,6 +21,8 @@ class AuthenticationController extends Controller
      */
     public function generateToken($name, $role)
     {
+        $name = explode("=", $name)[1];
+        $role = explode("=", $role)[1];
         $key = "example_key";
         $now = new \DateTimeImmutable();
         $payload = array(
@@ -40,13 +36,15 @@ class AuthenticationController extends Controller
         );
         $token = JWT::encode($payload, $key, 'HS256');
         $content = [
-            'type'=>'token',
-            'token'=>$token,
-            'name'=>explode("=", $name)[1],
-            'role'=>explode("=", $role)[1],
+            "success" => true,
+            "payload" => [
+                'token for user' =>$name,
+                'Role of User' => $role,
+                "token" => $token,
+                "message" => "Token is generated successfully."
+            ],
         ];
         $this->response->setStatusCode(200, 'Token Generated')->setJsonContent($content);
-
         return $this->response;
     }
 }

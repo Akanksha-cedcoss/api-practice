@@ -1,0 +1,68 @@
+<div class="overfloe-hidden w-50 justify-content-center">
+    <div class="row text-break alert alert-info">
+        <?php echo $this->getContent(); ?>
+    </div>
+    <div class="row">
+        <form method="post">
+            <fieldset>
+                <!-- Form Name -->
+               <legend class="h1 text-warning">Add New User</legend>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="product_name">User NAME</label>
+                    <div class="">
+                        <?php echo $this->tag->textField([
+                            "user_name",
+                            "placeholder" => "USER NAME",
+                            "class" => "form-control input-md",
+                        ]); ?>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="product_description">E-mail</label>
+                    <div class="">
+                        <?php echo $this->tag->textField([
+                            "email",
+                            "placeholder" => "USER E-MAIL",
+                            "class" => "form-control input-md",
+                        ]); ?>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="product_description">Password</label>
+                    <div class="">
+                        <?php echo $this->tag->textField([
+                            "password",
+                            "placeholder" => "PASSWORD",
+                            "class" => "form-control input-md",
+                        ]); ?>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="role">User Role</label>
+                    <div class="">
+                        <select name="role">
+                            <option value="Manager">Manager</option>
+                            <option value="Account">Account</option>
+                            <option value="Hr">HR</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div>
+                </div><!-- Text input-->
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="">
+                        <?php echo $this->tag->submitButton([
+                            'Add User',
+                            "class" => "btn btn-primary"
+                        ]); ?>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

@@ -4,25 +4,20 @@ use Phalcon\Mvc\Micro;
 use Phalcon\Loader;
 use Phalcon\Mvc\Micro\Collection as MicroCollection;
 use Phalcon\Di\FactoryDefault;
-use Phalcon\Security\JWT\Token\Parser;
-use Phalcon\Security\JWT\Validator;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use Phalcon\Events\Event;
 use Phalcon\Events\Manager;
 
-require_once('vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
 $loader = new Loader();
 
 $loader->registerNamespaces(
     [
-        'MyApp\Controllers' => './app/controllers/',
-        'App\Listeners'     =>  './app/listener/'
+        'MyApp\Controllers' => "./controllers/",
+        'App\Listeners'     =>  './listener/'
     ]
 );
 $loader->registerDirs([
-    "./app/models",
+    "./models",
 ]);
 $loader->register();
 
@@ -50,7 +45,7 @@ $app->before(
 $authentication = new MicroCollection($container);
 $authentication
     ->setHandler(new MyApp\Controllers\AuthenticationController())
-    ->setPrefix('/authenticate')
+    ->setPrefix('/api/authenticate')
     ->get('/', 'index')
     ->get('/token/{name:}&{role:}', 'generateToken');
 
@@ -62,7 +57,7 @@ $app->mount($authentication);
 $product = new MicroCollection($container);
 $product
     ->setHandler(new MyApp\Controllers\ProductController())
-    ->setPrefix('/product')
+    ->setPrefix('/api/product')
     ->get('/', 'index')
     ->get('/get', 'getAllProducts')
     ->get('/get/{limit:[0-9]+}/{page:[0-9]+}', 'getProductsByPage')
@@ -70,18 +65,19 @@ $product
 
 
 $app->mount($product);
+/**
+ * order micro controller
+ */
+$order = new MicroCollection($container);
+$order
+    ->setHandler(new MyApp\Controllers\OrderController())
+    ->setPrefix('/api/order')
+    ->get('/', 'index')
+    ->put('/update', 'updateOrderStatus')
+    ->post('/create', 'addNewOrder');
 
-// $app->get(
-//     '/api/robots/search/{name}',
-//     function ($name) {
-//     }
-// );
 
-// $app->get(
-//     '/api/robots/{id:[0-9]+}',
-//     function ($id) {
-//     }
-// );
+$app->mount($order);
 
 
 $app->notFound(
@@ -95,13 +91,7 @@ $app->notFound(
             ->send();
     }
 );
-$container->set(
-    'datetime',
-    function () {
-        return new DateTimeImmutable();
-    },
-    true
-);
+
 $container->set(
     'mongo',
     function () {
@@ -111,12 +101,10 @@ $container->set(
     true
 );
 $app->setEventsManager($manager);
+
 try {
     // Handle the request
     $response = $app->handle($_SERVER["REQUEST_URI"]);
 } catch (\Exception $e) {
     echo 'Exception: ', $e->getMessage();
 }
-// $app->handle(
-//     $_SERVER["REQUEST_URI"]
-// );
