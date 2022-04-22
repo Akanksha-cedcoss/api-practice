@@ -5,6 +5,8 @@ use Phalcon\Loader;
 use Phalcon\Mvc\Micro\Collection as MicroCollection;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Events\Manager;
+use Phalcon\Session\Manager as sessionManager;
+use Phalcon\Session\Adapter\Stream;
 
 require_once('../vendor/autoload.php');
 
@@ -27,6 +29,7 @@ $manager = new Manager();
 
 $app = new Micro();
 
+
 /**
  * before request handle event
  */
@@ -47,7 +50,7 @@ $authentication
     ->setHandler(new MyApp\Controllers\AuthenticationController())
     ->setPrefix('/api/authenticate')
     ->get('/', 'index')
-    ->get('/token/{name:}&{role:}', 'generateToken');
+    ->get('/token/{name:}', 'generateToken');
 
 $app->mount($authentication);
 
@@ -62,7 +65,6 @@ $product
     ->get('/get', 'getAllProducts')
     ->get('/get/{limit:[0-9]+}/{page:[0-9]+}', 'getProductsByPage')
     ->get('/get/{name}', 'getProductByName');
-
 
 $app->mount($product);
 /**
@@ -100,6 +102,7 @@ $container->set(
     },
     true
 );
+
 $app->setEventsManager($manager);
 
 try {

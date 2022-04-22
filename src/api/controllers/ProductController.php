@@ -38,22 +38,25 @@ class ProductController extends Controller
             $content = [
                 "success" => true,
                 "payload" => [
+                    "message" => "Products fetched successfully.",
                     'products' => $result,
-                    "message" => "Products fetched successfully."
+
                 ],
             ];
+            $this->response->setStatusCode(200, 'Products found')->setJsonContent($content);
+            return $this->response;
         } catch (Exception $e) {
             $content = [
                 "success" => false,
                 "payload" => [
                     'products' => $result,
                     "message" => "Products can not be fetched successfully.",
-                    "error" => $e.getMessage()
+                    "error" => $e . getMessage()
                 ],
             ];
+            $this->response->setStatusCode(500, 'Products can not be found')->setJsonContent($content);
+            return $this->response;
         }
-        $this->response->setStatusCode(200, 'Products found')->setJsonContent($content);
-        return $this->response;
     }
     /**
      * search product by name
@@ -80,6 +83,13 @@ class ProductController extends Controller
         $this->response->setStatusCode(200, 'Products found')->setJsonContent($content);
         return $this->response;
     }
+    /**
+     * get products by page , limit
+     *
+     * @param [type] $limit
+     * @param [type] $page
+     * @return void
+     */
     public function getProductsByPage($limit, $page)
     {
         $product = new Products;
