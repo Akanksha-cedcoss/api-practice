@@ -79,10 +79,15 @@
 </head>
 
 <body>
-
+    <?php
+    $profiler = new \Fabfuel\Prophiler\Profiler();
+    $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
+    $toolbar->addDataCollector(new \Fabfuel\Prophiler\DataCollector\Request());
+    echo $toolbar->render();
+    ?>
     <!-- The sidebar -->
     <div class="sidebar">
-        <a href="192.168.2.49:8080/frontend/product/allProducts">View Products</a>
+        <a href="http://localhost:8080/frontend/product/allProducts">View Products</a>
         <!-- <a href="http://localhost:8080/app/order/viewAllOrders">View Products</a>
         <a href="http://localhost:8080/app/user/addNewUser">Add New User</a>
         <a href="http://localhost:8080/app/webhooks/addNew">Add New WebHooks</a>

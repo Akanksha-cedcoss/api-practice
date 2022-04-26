@@ -11,6 +11,7 @@ use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Url;
 use GuzzleHttp\Client;
 
+(new \Phalcon\Debug())->listen();
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');

@@ -79,14 +79,19 @@
 </head>
 
 <body>
-
+    <?php
+    $profiler = new \Fabfuel\Prophiler\Profiler();
+    $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
+    $toolbar->addDataCollector(new \Fabfuel\Prophiler\DataCollector\Request());
+    echo $toolbar->render();
+    ?>
     <!-- The sidebar -->
     <div class="sidebar">
-        <a href="192.168.2.49:8080/app/order/viewAllOrders">View Orders</a>
-        <a href="192.168.2.49:8080/app/user/addNewUser">Add New User</a>
-        <a href="192.168.2.49:8080/app/webhooks/addNew">Add New WebHooks</a>
-        <a href="192.168.2.49:8080/app/product/allProducts">View Products</a>
-        <?php echo isset($this->session->user) ? '<a href="192.168.2.49:8080/app/user/logout">LogOut</a>' : '<a href="192.168.2.49:8080/app/user/login">Login</a>' ?>
+        <a href="http://localhost:8080/app/order/viewAllOrders">View Orders</a>
+        <a href="http://localhost:8080/app/user/addNewUser">Add New User</a>
+        <a href="http://localhost:8080/app/webhooks/addNew">Add New WebHooks</a>
+        <a href="http://localhost:8080/app/product/allProducts">View Products</a>
+        <?php echo isset($this->session->user) ? '<a href="http://localhost:8080/app/user/logout">LogOut</a>' : '<a href="http://localhost:8080/app/user/login">Login</a>' ?>
     </div>
 
     <div class="content container-fluid">

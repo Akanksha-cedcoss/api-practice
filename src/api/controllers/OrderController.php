@@ -62,6 +62,7 @@ class OrderController extends Controller
          else {
             $newOrder->user_id = $GLOBALS['user'];
             $newOrder->status = 'paid';
+            $newOrder->name = $product->name;
             $reqResult = $order->addNewOrder($newOrder);
             if ($reqResult) {
                 $content = [

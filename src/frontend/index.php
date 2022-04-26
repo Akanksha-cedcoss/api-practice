@@ -9,7 +9,7 @@ use Phalcon\Session\Manager;
 use Phalcon\Session\Adapter\Stream;
 use Phalcon\Url;
 // use Phalcon\Debug;
-// (new Debug())->listen();
+(new \Phalcon\Debug())->listen();
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/frontend');

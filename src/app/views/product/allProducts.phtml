@@ -1,4 +1,4 @@
-<a href="192.168.2.49:8080/app/product/addNew" class="btn btn-success">Add new Product</a>
+<a href="http://localhost:8080/app/product/addNew" class="btn btn-success">Add new Product</a>
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
@@ -37,7 +37,7 @@
         $('.stockbtn').on('click', function() { 
             $.ajax({
             type: "POST",
-            url: "192.168.2.49:8080/app/product/updateStock/",
+            url: "http://localhost:8080/app/product/updateStock/",
             data: {
                 'product_id' : $(this).attr('data'),
                 "stock" : $(this).parent().siblings('.stock').html()
@@ -50,7 +50,7 @@
             console.log($(this).parent().siblings('.price').html());
             $.ajax({
             type: "POST",
-            url: "192.168.2.49:8080/app/product/updatePrice/",
+            url: "http://localhost:8080/app/product/updatePrice/",
             data: {
                 'product_id' : $(this).attr('data'),
                 "price" : $(this).parent().siblings('.price').html()

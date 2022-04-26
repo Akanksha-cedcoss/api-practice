@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit958270c8ce44109c5f7f08307b32267d
+class ComposerStaticInit9465a3af2c3eb23fe1362eba74eaf17d
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -22,6 +22,7 @@ class ComposerStaticInit958270c8ce44109c5f7f08307b32267d
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
         ),
@@ -50,10 +51,14 @@ class ComposerStaticInit958270c8ce44109c5f7f08307b32267d
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -85,9 +90,52 @@ class ComposerStaticInit958270c8ce44109c5f7f08307b32267d
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'F' => 
+        array (
+            'Fabfuel\\Prophiler\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/fabfuel/prophiler/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Fabfuel\\Prophiler\\Adapter\\AdapterAbstractTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Adapter/AdapterAbstractTest.php',
+        'Fabfuel\\Prophiler\\Adapter\\Doctrine\\SQLLoggerTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Adapter/Doctrine/SQLLoggerTest.php',
+        'Fabfuel\\Prophiler\\Adapter\\Fabfuel\\MongoTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Adapter/Fabfuel/MongoTest.php',
+        'Fabfuel\\Prophiler\\Adapter\\Interop\\Container\\ContainerTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Adapter/Interop/Container/ContainerTest.php',
+        'Fabfuel\\Prophiler\\Adapter\\Psr\\Log\\LoggerTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Adapter/Psr/Log/LoggerTest.php',
+        'Fabfuel\\Prophiler\\Aggregator\\AbstractAggregatorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Aggregator/AbstractAggregatorTest.php',
+        'Fabfuel\\Prophiler\\Aggregator\\AggregationTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Aggregator/AggregationTest.php',
+        'Fabfuel\\Prophiler\\Aggregator\\Cache\\CacheAggregatorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Aggregator/Cache/CacheAggregatorTest.php',
+        'Fabfuel\\Prophiler\\Aggregator\\Database\\QueryAggregatorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Aggregator/Database/QueryAggregatorTest.php',
+        'Fabfuel\\Prophiler\\Aggregator\\TestableAbstractAggregator' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Aggregator/AbstractAggregatorTest.php',
+        'Fabfuel\\Prophiler\\BenchmarkTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Benchmark/BenchmarkTest.php',
+        'Fabfuel\\Prophiler\\Benchmark\\BenchmarkFactoryTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Benchmark/BenchmarkFactoryTest.php',
+        'Fabfuel\\Prophiler\\DataCollector\\GenericTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/DataCollector/GenericTest.php',
+        'Fabfuel\\Prophiler\\DataCollector\\RequestTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/DataCollector/RequestTest.php',
+        'Fabfuel\\Prophiler\\Decorator\\Elasticsearch\\ClientDecoratorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Decorator/Elasticsearch/ClientDecoratorTest.php',
+        'Fabfuel\\Prophiler\\Decorator\\Foobar' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Decorator/GeneralDecoratorTest.php',
+        'Fabfuel\\Prophiler\\Decorator\\GeneralDecoratorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Decorator/GeneralDecoratorTest.php',
+        'Fabfuel\\Prophiler\\Decorator\\PDO\\PDOStatementTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Decorator/PDO/PDOStatementTest.php',
+        'Fabfuel\\Prophiler\\Decorator\\PDO\\PDOTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Decorator/PDO/PDOTest.php',
+        'Fabfuel\\Prophiler\\Decorator\\Phalcon\\Cache\\BackendDecoratorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Decorator/Phalcon/Cache/BackendDecoratorTest.php',
+        'Fabfuel\\Prophiler\\Iterator\\ComponentFilteredIteratorTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Iterator/ComponentFilteredIteratorTest.php',
+        'Fabfuel\\Prophiler\\Mock\\PDO' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Mock/PDO.php',
+        'Fabfuel\\Prophiler\\Plugin\\Manager\\PhalconTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Plugin/Manager/PhalconTest.php',
+        'Fabfuel\\Prophiler\\Plugin\\Phalcon\\Db\\AdapterPluginTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Plugin/Phalcon/Db/AdapterPluginTest.php',
+        'Fabfuel\\Prophiler\\Plugin\\Phalcon\\Mvc\\DispatcherPluginTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Plugin/Phalcon/Mvc/DispatcherPluginTest.php',
+        'Fabfuel\\Prophiler\\Plugin\\Phalcon\\Mvc\\ViewPluginTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Plugin/Phalcon/Mvc/ViewPluginTest.php',
+        'Fabfuel\\Prophiler\\Plugin\\Phalcon\\PhalconPluginTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Plugin/Phalcon/PhalconPluginTest.php',
+        'Fabfuel\\Prophiler\\ProfilerTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/ProfilerTest.php',
+        'Fabfuel\\Prophiler\\ToolbarTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/ToolbarTest.php',
+        'Fabfuel\\Prophiler\\Toolbar\\Formatter\\BenchmarkFormatterTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Toolbar/Formatter/BenchmarkFormatterTest.php',
+        'Fabfuel\\Prophiler\\Toolbar\\Formatter\\Encoder\\HtmlEncoderTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Toolbar/Formatter/Encoder/HtmlEncoderTest.php',
+        'Fabfuel\\Prophiler\\Toolbar\\Formatter\\LogFormatterTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Toolbar/Formatter/LogFormatterTest.php',
+        'Fabfuel\\Prophiler\\Toolbar\\Formatter\\TimelineFormatterTest' => __DIR__ . '/..' . '/fabfuel/prophiler/tests/Fabfuel/Prophiler/Toolbar/Formatter/TimelineFormatterTest.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
@@ -97,9 +145,10 @@ class ComposerStaticInit958270c8ce44109c5f7f08307b32267d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit958270c8ce44109c5f7f08307b32267d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit958270c8ce44109c5f7f08307b32267d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit958270c8ce44109c5f7f08307b32267d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9465a3af2c3eb23fe1362eba74eaf17d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9465a3af2c3eb23fe1362eba74eaf17d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9465a3af2c3eb23fe1362eba74eaf17d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9465a3af2c3eb23fe1362eba74eaf17d::$classMap;
 
         }, null, ClassLoader::class);
     }
