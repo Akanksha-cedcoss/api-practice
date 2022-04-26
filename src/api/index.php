@@ -8,7 +8,9 @@ use Phalcon\Events\Manager;
 use Phalcon\Session\Manager as sessionManager;
 use Phalcon\Session\Adapter\Stream;
 
-require_once('../vendor/autoload.php');
+define('BASE_PATH', dirname(__DIR__));
+define('APP_PATH', BASE_PATH . '/api');
+require_once(APP_PATH . '/vendor/autoload.php');
 
 $loader = new Loader();
 

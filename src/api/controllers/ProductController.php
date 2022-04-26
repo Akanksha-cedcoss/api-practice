@@ -29,6 +29,7 @@ class ProductController extends Controller
             $result = array();
             foreach ($products as $p) {
                 array_push($result, array(
+                    "id" => $p->_id,
                     "name"       =>   $p->name,
                     "category"   =>   $p->category,
                     "price"      =>   $p->price,

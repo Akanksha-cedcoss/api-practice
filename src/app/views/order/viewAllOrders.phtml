@@ -1,0 +1,29 @@
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Placed By</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if (isset($this->session->user)) {
+            foreach ($orders as $k => $order) {
+                echo '<tr>
+                <th scope="row">' . $k . '</th>
+                <td>' . $order->name . '</td>
+                <td>' . $order->category . '</td>
+                <td>' . $order->price . '</td>
+                <td>' . $order->stock . '</td>
+                <td>' . $order->User_name . '</td>
+            </tr>';
+            }
+        }
+        ?>
+
+    </tbody>
+</table>

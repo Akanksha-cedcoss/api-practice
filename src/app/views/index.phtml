@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Phalcon Tutorial</title>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .sidebar {
+            margin: 0;
+            padding: 0;
+            width: 200px;
+            background-color: #f1f1f1;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        /* Sidebar links */
+        .sidebar a {
+            display: block;
+            color: black;
+            padding: 16px;
+            text-decoration: none;
+        }
+
+        /* Active/current link */
+        .sidebar a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        /* Links on mouse-over */
+        .sidebar a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+
+        /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+        div.content {
+            margin-left: 200px;
+            padding: 1px 16px;
+            height: 1000px;
+        }
+
+        /* On screens that are less than 700px wide, make the sidebar into a topbar */
+        @media screen and (max-width: 700px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .sidebar a {
+                float: left;
+            }
+
+            div.content {
+                margin-left: 0;
+            }
+        }
+
+        /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+        @media screen and (max-width: 400px) {
+            .sidebar a {
+                text-align: center;
+                float: none;
+            }
+        }
+
+        .table {
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- The sidebar -->
+    <div class="sidebar">
+        <a href="192.168.2.49:8080/app/order/viewAllOrders">View Orders</a>
+        <a href="192.168.2.49:8080/app/user/addNewUser">Add New User</a>
+        <a href="192.168.2.49:8080/app/webhooks/addNew">Add New WebHooks</a>
+        <a href="192.168.2.49:8080/app/product/allProducts">View Products</a>
+        <?php echo isset($this->session->user) ? '<a href="192.168.2.49:8080/app/user/logout">LogOut</a>' : '<a href="192.168.2.49:8080/app/user/login">Login</a>' ?>
+    </div>
+
+    <div class="content container-fluid">
+        <div class="container-fluid">
+            <h1>Welcome to backend <?php echo $this->session->get('user') ?? 'Guest' ?></h1>
+        </div>
+        <?php
+        echo $this->getContent();
+        echo PHP_EOL;
+        ?>
+    </div>
+</body>
+
+</html>
+<?php

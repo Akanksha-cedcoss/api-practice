@@ -82,14 +82,16 @@
 
     <!-- The sidebar -->
     <div class="sidebar">
-        <a href="http://localhost:8080/frontend/order/viewAllOrders">View Orders</a>
-        <a href="http://localhost:8080/frontend/user/addNewUser">Add New User</a>
-        <?php echo isset($this->session->user) ? '<a href="http://localhost:8080/frontend/user/logout">LogOut</a>' : '<a href="http://localhost:8080/frontend/user/login">Login</a>' ?>
+        <a href="192.168.2.49:8080/frontend/product/allProducts">View Products</a>
+        <!-- <a href="http://localhost:8080/app/order/viewAllOrders">View Products</a>
+        <a href="http://localhost:8080/app/user/addNewUser">Add New User</a>
+        <a href="http://localhost:8080/app/webhooks/addNew">Add New WebHooks</a>
+         -->
     </div>
 
     <div class="content container-fluid">
         <div class="container-fluid">
-            <h1>Welcome to backend <?php echo $this->session->get('user') ?? 'Guest' ?></h1>
+            <h1>Welcome to Frontend</h1>
         </div>
         <?php
         echo $this->getContent();

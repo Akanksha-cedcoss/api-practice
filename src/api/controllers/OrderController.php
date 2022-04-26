@@ -11,7 +11,7 @@ use Order;
 use Products;
 use Users;
 
-require_once("App\Listeners\NotificationsListener.php");
+// require_once("App\Listeners\NotificationsListener.php");
 /**
  * @property Response $response
  */
@@ -45,7 +45,21 @@ class OrderController extends Controller
                 ],
             ];
             return $this->response->setStatusCode(400)->setJsonContent($content);
-        } else {
+        }else if ($product->stock<=0) {
+            $content = [
+                "success" => false,
+                "payload" => [
+                    'Request sent by' => USER_ID,
+                    'Role of User' => ROLE,
+                    "message" => "Sorry, product is out of stock right now.",
+                    "error" => [
+                        "Product stock is 0."
+                    ]
+                ],
+            ];
+            return $this->response->setStatusCode(400)->setJsonContent($content);
+        }
+         else {
             $newOrder->user_id = $GLOBALS['user'];
             $newOrder->status = 'paid';
             $reqResult = $order->addNewOrder($newOrder);

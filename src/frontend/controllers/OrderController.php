@@ -5,6 +5,12 @@ use Phalcon\Mvc\Controller;
 
 class OrderController extends Controller
 {
+    public $orders;
+
+    function initialize()
+    {
+        $this->orders = new Order;
+    }
 
     public function viewAllOrdersAction()
     {
@@ -13,8 +19,6 @@ class OrderController extends Controller
          *
          * @return void
          */
-        $orders = new Order;
-        $this->view->orders = $orders->getAllOrders();
+        $this->view->orders = $this->orders->getAllOrders();
     }
-    
 }

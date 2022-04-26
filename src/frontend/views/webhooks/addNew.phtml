@@ -1,0 +1,45 @@
+<div class="overfloe-hidden w-50 justify-content-center">
+    <div class="row text-break alert alert-info">
+        <?php echo $this->getContent(); ?>
+    </div>
+    <div class="row">
+        <form method="post">
+            <fieldset>
+                <!-- Form Name -->
+                <legend class="h1 text-warning">Add New Webhook</legend>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="product_name">Event name</label>
+                    <div class="">
+                        <?php echo $this->tag->textField([
+                            "event",
+                            "placeholder" => "webhook event",
+                            "class" => "form-control input-md",
+                        ]); ?>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="product_description">Response URL</label>
+                    <div class="">
+                        <?php echo $this->tag->textField([
+                            "url",
+                            "placeholder" => "URL",
+                            "class" => "form-control input-md",
+                        ]); ?>
+                    </div>
+                </div><!-- Text input-->
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="">
+                        <?php echo $this->tag->submitButton([
+                            'Add Webhook',
+                            "class" => "btn btn-primary"
+                        ]); ?>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

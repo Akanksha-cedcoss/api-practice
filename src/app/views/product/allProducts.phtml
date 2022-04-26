@@ -1,0 +1,63 @@
+<a href="192.168.2.49:8080/app/product/addNew" class="btn btn-success">Add new Product</a>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if (isset($this->session->user)) {
+            foreach ($products as $k => $product) {
+                echo '<tr>
+                <th scope="row">' . $k . '</th>
+                <td>' . $product->name . '</td>
+                <td>' . $product->category . '</td>
+                <td contenteditable="true" class="price">' . $product->price . '</td>
+                <td contenteditable="true" class="stock">' . $product->stock . '</td>
+                <td style="display:none;" name="product_id">' . $product->_id . '</td>
+                <td>
+                    <button class="btn btn-sm btn-info stockbtn" data="' . $product->_id . '">Update Stock</button>
+                    <button class="btn btn-sm btn-info pricebtn" data="' . $product->_id . '">Update Price</button>
+                </td>
+            </tr>';
+            }
+        }
+        ?>
+
+    </tbody>
+</table>
+<script>
+    $(document).ready(function() {
+        $('.stockbtn').on('click', function() { 
+            $.ajax({
+            type: "POST",
+            url: "192.168.2.49:8080/app/product/updateStock/",
+            data: {
+                'product_id' : $(this).attr('data'),
+                "stock" : $(this).parent().siblings('.stock').html()
+            }
+         }).done(function(){
+            window.location.reload();
+         });
+        });
+        $('.pricebtn').on('click', function() {
+            console.log($(this).parent().siblings('.price').html());
+            $.ajax({
+            type: "POST",
+            url: "192.168.2.49:8080/app/product/updatePrice/",
+            data: {
+                'product_id' : $(this).attr('data'),
+                "price" : $(this).parent().siblings('.price').html()
+            }
+         }).done(function(){
+            // window.location.reload();
+         });
+        });
+    });
+</script>

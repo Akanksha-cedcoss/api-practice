@@ -8,11 +8,13 @@ use Phalcon\Flash\Direct as FlashDirect;
 use Phalcon\Session\Manager;
 use Phalcon\Session\Adapter\Stream;
 use Phalcon\Url;
+// use Phalcon\Debug;
+// (new Debug())->listen();
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/frontend');
 $_SERVER['REQUEST_URI'] = str_replace("/frontend/", "/", $_SERVER['REQUEST_URI']);
-require_once(BASE_PATH . '/vendor/autoload.php');
+require_once(APP_PATH . '/vendor/autoload.php');
 // Register an autoloader
 $loader = new Loader();
 
@@ -72,7 +74,7 @@ $container->set(
     'mongo',
     function () {
         $mongo = new \MongoDB\Client("mongodb://mongo", array("username" => 'root', "password" => 'password123'));
-        return $mongo->store;
+        return $mongo->frontend;
     },
     true
 );
