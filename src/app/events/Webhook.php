@@ -8,7 +8,9 @@ use Phalcon\Di\Injectable;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Client;
 use Phalcon\Exception;
+use Product;
 use Webhooks;
+use Products;
 
 
 /**
@@ -30,6 +32,10 @@ class Webhook extends Injectable
     ) {
         $webhook = new Webhooks;
         $hook = $webhook->getWebhookByEvent('Product.add');
+        $product = json_decode(json_encode($product), true);
+        $product['_id'] = new \MongoDB\BSON\ObjectID($product['_id']['$oid']);
+        // echo "<pre>";
+        // die(print_r($product));
         if (!is_null($hook)) {
             $headers = [
                 'Content-Type' => 'application/json',
@@ -37,7 +43,8 @@ class Webhook extends Injectable
             ];
             foreach ($hook as $huk) {
                 $client = new Client(['base_uri' => $huk->url]);
-                $client->request('POST', "", ["headers" => $headers, 'body' => json_encode($product)]);
+                $res = $client->request('POST', "", ["headers" => $headers, 'body' => json_encode($product)]);
+                die($res);
             }
         }
     }

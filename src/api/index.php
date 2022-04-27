@@ -5,6 +5,8 @@ use Phalcon\Loader;
 use Phalcon\Mvc\Micro\Collection as MicroCollection;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Events\Manager;
+use Phalcon\Config\ConfigFactory;
+use Phalcon\Config;
 use Phalcon\Session\Manager as sessionManager;
 use Phalcon\Session\Adapter\Stream;
 
@@ -17,7 +19,8 @@ $loader = new Loader();
 $loader->registerNamespaces(
     [
         'MyApp\Controllers' => "./controllers/",
-        'App\Listeners'     =>  './listener/'
+        'App\Listeners'     =>  './listener/',
+        'App\components'    =>   './components/'
     ]
 );
 $loader->registerDirs([
@@ -95,11 +98,25 @@ $app->notFound(
             ->send();
     }
 );
-
+/**
+ * register config file
+ */
+$container->set(
+    'config',
+    function () {
+        $file_name = './components/config.php';
+        $factory  = new ConfigFactory();
+        return $factory->newInstance('php', $file_name);
+    }
+);
 $container->set(
     'mongo',
     function () {
-        $mongo = new \MongoDB\Client("mongodb://mongo", array("username" => 'root', "password" => 'password123'));
+        $mango = $this->get('config')->mongo;
+        $mongo = new \MongoDB\Client("mongodb://mongo", array(
+            "username" => $mango->username,
+            "password" => $mango->password
+        ));
         return $mongo->store;
     },
     true

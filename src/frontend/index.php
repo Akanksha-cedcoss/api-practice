@@ -8,8 +8,10 @@ use Phalcon\Flash\Direct as FlashDirect;
 use Phalcon\Session\Manager;
 use Phalcon\Session\Adapter\Stream;
 use Phalcon\Url;
-// use Phalcon\Debug;
-(new \Phalcon\Debug())->listen();
+use Phalcon\Debug;
+use Phalcon\Config\ConfigFactory;
+use Phalcon\Config;
+(new Debug())->listen();
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/frontend');
@@ -17,7 +19,14 @@ $_SERVER['REQUEST_URI'] = str_replace("/frontend/", "/", $_SERVER['REQUEST_URI']
 require_once(APP_PATH . '/vendor/autoload.php');
 // Register an autoloader
 $loader = new Loader();
-
+$loader->registerNamespaces(
+    [
+        'App\components'    =>   './components/'
+    ]
+);
+$loader->registerDirs([
+    "./models",
+]);
 $loader->registerDirs(
     [
         APP_PATH . "/controllers/",
@@ -67,14 +76,30 @@ $container->setShared('session', function () {
     $session->setAdapter($files)->start();
     return $session;
 });
+
+/**
+ * register config file
+ */
+$container->set(
+    'config',
+    function () {
+        $file_name = './components/config.php';
+        $factory  = new ConfigFactory();
+        return $factory->newInstance('php', $file_name);
+    }
+);
 /**
  * register db service using config file
  */
 $container->set(
     'mongo',
     function () {
-        $mongo = new \MongoDB\Client("mongodb://mongo", array("username" => 'root', "password" => 'password123'));
-        return $mongo->frontend;
+        $mango = $this->get('config')->mongo;
+        $mongo = new \MongoDB\Client("mongodb://mongo", array(
+            "username" => $mango->username,
+            "password" => $mango->password
+        ));
+        return $mongo->store;
     },
     true
 );

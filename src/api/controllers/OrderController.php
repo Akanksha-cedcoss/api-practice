@@ -27,17 +27,20 @@ class OrderController extends Controller
         $order = new Order;
         $products = new Products;
         $key = "example_key";
-        // $jwt = JWT::decode($this->request->getQuery('bearer'), new Key($key, 'HS256'));
-        // $role = $jwt->sub;
-        // $user_id = $jwt->uid;
-        $newOrder = $this->request->getJsonRawBody();
+        $jwt = JWT::decode($this->request->getQuery('bearer'), new Key($key, 'HS256'));
+        $role = $jwt->sub;
+        $user_id = $jwt->uid;
+        $newOrder = json_decode($this->request->getJsonRawBody());
         $product = $products->getProductById($newOrder->product_id);
+        print_r(json_decode($product));
+        echo 'end';
+        die;
         if (is_null($product)) {
             $content = [
                 "success" => false,
                 "payload" => [
-                    'Request sent by' => USER_ID,
-                    'Role of User' => ROLE,
+                    'Request sent by' => $user_id,
+                    // 'Role of User' => ROLE,
                     "message" => "Product is not found in the database.",
                     "error" => [
                         "Product id is invalid"
@@ -45,12 +48,12 @@ class OrderController extends Controller
                 ],
             ];
             return $this->response->setStatusCode(400)->setJsonContent($content);
-        }else if ($product->stock<=0) {
+        } else if ($product->stock <= 0) {
             $content = [
                 "success" => false,
                 "payload" => [
-                    'Request sent by' => USER_ID,
-                    'Role of User' => ROLE,
+                    'Request sent by' => $user_id,
+                    // 'Role of User' => ROLE,
                     "message" => "Sorry, product is out of stock right now.",
                     "error" => [
                         "Product stock is 0."
@@ -58,9 +61,8 @@ class OrderController extends Controller
                 ],
             ];
             return $this->response->setStatusCode(400)->setJsonContent($content);
-        }
-         else {
-            $newOrder->user_id = $GLOBALS['user'];
+        } else {
+            $newOrder->user_id = $user_id;
             $newOrder->status = 'paid';
             $newOrder->name = $product->name;
             $reqResult = $order->addNewOrder($newOrder);
@@ -68,8 +70,8 @@ class OrderController extends Controller
                 $content = [
                     "success" => true,
                     "payload" => [
-                        'Request sent by' => USER_ID,
-                        'Role of User' => ROLE,
+                        'Request sent by' => $user_id,
+                        // 'Role of User' => ROLE,
                         "message" => "Order placed Successfully.",
                         "Order created" => $newOrder
                     ],

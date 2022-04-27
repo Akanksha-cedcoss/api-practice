@@ -29,7 +29,7 @@ class Products extends Model
     }
     public function addNewProduct($product)
     {
-        $this->collection->insertOne($product);
+        return $this->collection->insertOne($product)->getInsertedId();
     }
     public function updateProductStock($product_id, $stock)
     {

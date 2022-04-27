@@ -41,9 +41,10 @@ class ProductController extends Controller
                 'price' => $this->escaper->escapeHtml($this->request->getPost('price')),
                 'stock' => $this->escaper->escapeHtml($this->request->getPost('stock'))
             );
-            $this->products->addNewProduct($product);
+            $product_id = $this->products->addNewProduct($product);
             $this->flash->success('New Product Added.');
-            $this->di->get('EventsManager')->fire('webhooks:newProductWebhook:', $this, $product);
+            $product = $this->products->getProductById($product_id);
+            $this->di->get('EventsManager')->fire('webhooks:newProductWebhook:', $this,$product);
         }
     }
     public function updateStockAction()
