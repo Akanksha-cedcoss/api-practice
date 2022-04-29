@@ -1,40 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 use Phalcon\Mvc\Controller;
 
-
-class ProductController extends Controller
+final class ProductController extends Controller
 {
-    public $webhooks;
-
-    function initialize()
+    /**
+     * initializing product collection object
+     *
+     * @return void
+     */
+    public function initialize():void
     {
-        $this->products = new Products;
+        $this->products = new Products();
     }
     /**
      * get all products
      *
      * @return void
      */
-    public function allProductsAction()
+    public function allProductsAction(): void
     {
         $this->view->products = $this->products->getAllProducts();
-        if (isset($_POST['stockbtn'])) {
-            $stock = $_POST['stock'];
-            die($stock);
-            $product_id = $_POST['product_id'];
-            
-        }
-        elseif (isset($_POST['pricebtn'])) {
-            $price = $_POST['price'];
-            $product_id = $_POST['product_id'];
-            $this->products->updateProductPrice($product_id, $price);
-            $this->di->get('EventsManager')->fire('webhooks:updatePriceWebhook:', $this, ['id'=>$product_id, 'price'=>$price]);
-        }
     }
-    public function addNewAction()
+    /**
+     * add new product to product collection
+     *
+     * @return void
+     */
+    public function addNewAction(): void
     {
-        if ($_POST) {
+        if ($this->request->isPost()) {
             $product = array(
                 'name' => $this->escaper->escapeHtml($this->request->getPost('name')),
                 'category' => $this->escaper->escapeHtml($this->request->getPost('category')),
@@ -44,24 +41,43 @@ class ProductController extends Controller
             $product_id = $this->products->addNewProduct($product);
             $this->flash->success('New Product Added.');
             $product = $this->products->getProductById($product_id);
-            $this->di->get('EventsManager')->fire('webhooks:newProductWebhook:', $this,$product);
+            /**
+             * fire new product webhook event
+             */
+            $this->di->get('EventsManager')->fire('webhooks:newProductWebhook:', $this, $product);
         }
     }
-    public function updateStockAction()
+    /**
+     * update stock of product in product collection
+     *
+     * @return void
+     */
+    public function updateStockAction(): void
     {
-        if($_POST){
+        if($this->request->isPost()){
             $product_id = $this->request->getPost('product_id');
             $stock = $this->request->getPost('stock');
             $this->products->updateProductStock($product_id, $stock);
+            /**
+             * fire product stock update webhook event
+             */
             $this->di->get('EventsManager')->fire('webhooks:updateStockWebhook:', $this, ['id'=>$product_id, 'stock'=>$stock]);
         }
     }
-    public function updatePriceAction()
+    /**
+     * update product price in product collection
+     *
+     * @return void
+     */
+    public function updatePriceAction(): void
     {
-        if($_POST){
+        if($this->request->isPost()){
             $product_id = $this->request->getPost('product_id');
             $price = $this->request->getPost('price');
             $this->products->updateProductPrice($product_id, $price);
+            /**
+             * fire product price update webhook event
+             */
             $this->di->get('EventsManager')->fire('webhooks:updatePriceWebhook:', $this, ['id'=>$product_id, 'price'=>$price]);
         }
     }

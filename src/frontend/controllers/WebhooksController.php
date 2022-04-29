@@ -1,30 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 use Phalcon\Mvc\Controller;
 
-
-class WebhooksController extends Controller
+final class WebhooksController extends Controller
 {
-    public $products;
-
-    function initialize(){
-        $this->products = new Product;
+    /**
+     * initialize product collection object
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        $this->products = new Product();
     }
-    public function newProductUpdateAction()
+    /**
+     * handle webhook request of new product update
+     *
+     * @return void
+     */
+    public function newProductUpdateAction(): void
     {
         if ($this->request->isPOST()) {
             $newProduct = $this->request->getJsonRawBody();
             $this->products->addNewProduct($newProduct);
         }
     }
-    public function productStockUpdateAction()
+    /**
+     * handle webhook request of product stock change
+     *
+     * @return void
+     */
+    public function productStockUpdateAction(): void
     {
         if ($this->request->isPOST()) {
             $productData = $this->request->getJsonRawBody();
             $this->products->updateProductStock($productData->id, $productData->stock);
         }
     }
-    public function productPriceUpdateAction()
+    /**
+     * handle webhook request of product price changes
+     *
+     * @return void
+     */
+    public function productPriceUpdateAction(): void
     {
         if ($this->request->isPOST()) {
             $productData = $this->request->getJsonRawBody();

@@ -12,7 +12,7 @@ use Phalcon\Session\Adapter\Stream;
 
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/api');
-require_once(APP_PATH . '/vendor/autoload.php');
+require_once(APP_PATH . '/library/vendor/autoload.php');
 
 $loader = new Loader();
 

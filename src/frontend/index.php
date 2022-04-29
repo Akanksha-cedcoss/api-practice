@@ -1,39 +1,40 @@
 <?php
 
-use Phalcon\Di\FactoryDefault;
-use Phalcon\Loader;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Application;
-use Phalcon\Flash\Direct as FlashDirect;
-use Phalcon\Session\Manager;
-use Phalcon\Session\Adapter\Stream;
-use Phalcon\Url;
-use Phalcon\Debug;
+declare(strict_types=1);
+
 use Phalcon\Config\ConfigFactory;
-use Phalcon\Config;
+use Phalcon\Debug;
+use Phalcon\Di\FactoryDefault;
+use Phalcon\Flash\Direct as FlashDirect;
+use Phalcon\Loader;
+use Phalcon\Mvc\Application;
+use Phalcon\Mvc\View;
+use Phalcon\Session\Adapter\Stream;
+use Phalcon\Session\Manager;
+use Phalcon\Url;
 (new Debug())->listen();
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/frontend');
-$_SERVER['REQUEST_URI'] = str_replace("/frontend/", "/", $_SERVER['REQUEST_URI']);
-require_once(APP_PATH . '/vendor/autoload.php');
+$_SERVER['REQUEST_URI'] = str_replace('/frontend/', '/', $_SERVER['REQUEST_URI']);
+require_once BASE_PATH . '/library/vendor/autoload.php';
+
 // Register an autoloader
 $loader = new Loader();
 $loader->registerNamespaces(
     [
-        'App\components'    =>   './components/'
+        'App\components' => './components/',
     ]
 );
 $loader->registerDirs([
-    "./models",
+    './models',
 ]);
 $loader->registerDirs(
     [
-        APP_PATH . "/controllers/",
-        APP_PATH . "/models/",
+        APP_PATH . '/controllers/',
+        APP_PATH . '/models/',
     ]
 );
-
 
 $loader->register();
 
@@ -66,7 +67,7 @@ $container->set(
     }
 );
 /**
- * register session service
+ *register session service
  */
 $container->setShared('session', function () {
     $session = new Manager();
@@ -78,26 +79,26 @@ $container->setShared('session', function () {
 });
 
 /**
- * register config file
+ *register config file
  */
 $container->set(
     'config',
     function () {
         $file_name = './components/config.php';
-        $factory  = new ConfigFactory();
+        $factory = new ConfigFactory();
         return $factory->newInstance('php', $file_name);
     }
 );
 /**
- * register db service using config file
+ *register db service using config file
  */
 $container->set(
     'mongo',
     function () {
         $mango = $this->get('config')->mongo;
-        $mongo = new \MongoDB\Client("mongodb://mongo", array(
-            "username" => $mango->username,
-            "password" => $mango->password
+        $mongo = new \MongoDB\Client('mongodb://mongo', array(
+            'username' => $mango->username,
+            'password' => $mango->password
         ));
         return $mongo->store;
     },
@@ -107,7 +108,7 @@ $container->set(
 try {
     // Handle the request
     $response = $application->handle(
-        $_SERVER["REQUEST_URI"]
+        $_SERVER['REQUEST_URI']
     );
 
     $response->send();

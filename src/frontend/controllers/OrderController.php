@@ -1,33 +1,35 @@
 <?php
 
-use Phalcon\Mvc\Controller;
-use GuzzleHttp\Client;
+declare(strict_types=1);
 
-class OrderController extends Controller
+use GuzzleHttp\Client;
+use Phalcon\Mvc\Controller;
+
+final class OrderController extends Controller
 {
-    public function placeOrderAction($product_id)
+    /**
+     * Place order for product by using API
+     *
+     * @param int $product_id
+     * @return void
+     */
+    public function placeOrderAction(int $product_id): void
     {
         $this->view->product_id = $product_id;
-        if ($_POST) {
+        if ($this->request->getPost()) {
             $token = $this->di->get('config')->app->token;
             $headers = [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ];
-           
             $client = new Client(['base_uri' => '192.168.2.49:8080/api/']);
             $body = json_encode($this->request->getPost());
             try {
-                $result = $client->request('POST', "order/create?bearer=" . $token, ["headers" => $headers, 'body' => json_encode($body)])->getBody();
-                // $result = $client->request('POST', "order/create?bearer=" . $token, [
-                //     'form_params' => 
-                //     $body
-                // ])->getBody();
-                die('this1 ' . $result);
+                $result = $client->request('POST', 'order/create?bearer=' . $token, ['headers' => $headers, 'body' => json_encode($body)])->getBody();
+                $this->flash->setContent($result);
             } catch (Exception $e) {
-                die($e->getMessage());
+                $this->flash->setContent($e->getMessage());
             }
-            die('this ' . $result);
         }
     }
 }

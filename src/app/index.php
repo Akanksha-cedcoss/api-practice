@@ -1,32 +1,36 @@
 <?php
 
-use Phalcon\Di\FactoryDefault;
-use Phalcon\Loader;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Application;
-use Phalcon\Flash\Direct as FlashDirect;
-use Phalcon\Session\Manager;
-use Phalcon\Session\Adapter\Stream;
-use Phalcon\Events\Manager as EventsManager;
-use Phalcon\Url;
+declare(strict_types=1);
+
 use GuzzleHttp\Client;
+use Phalcon\Di\FactoryDefault;
+use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Flash\Direct as FlashDirect;
+use Phalcon\Loader;
+use Phalcon\Mvc\Application;
+use Phalcon\Mvc\View;
+use Phalcon\Session\Adapter\Stream;
+use Phalcon\Session\Manager;
+use Phalcon\Url;
 
 (new \Phalcon\Debug())->listen();
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
+
 define('APP_PATH', BASE_PATH . '/app');
-$_SERVER['REQUEST_URI'] = str_replace("/app/", "/", $_SERVER['REQUEST_URI']);
-require_once(APP_PATH . '/vendor/autoload.php');
+
+$_SERVER['REQUEST_URI'] = str_replace('/app/', '/', $_SERVER['REQUEST_URI']);
+
+require_once BASE_PATH . '/library/vendor/autoload.php';
 // Register an autoloader
 $loader = new Loader();
 
 $loader->registerDirs(
     [
-        APP_PATH . "/controllers/",
-        APP_PATH . "/models/",
+        APP_PATH . '/controllers/',
+        APP_PATH . '/models/',
     ]
 );
-
 
 $loader->register();
 
@@ -65,17 +69,16 @@ $container->set(
 $container->set(
     'client',
     function () {
-        $client = new Client([
+        return new Client([
             'base_uri' => 'https://api.spotify.com/v1/'
         ]);
-        return $client;
     }
 );
 // Register Event manager
 $eventsManager = new EventsManager();
 $eventsManager->attach(
     'webhooks',
-    new App\Events\Webhook
+    new App\Events\Webhook()
 );
 $application->setEventsManager($eventsManager);
 
@@ -97,19 +100,22 @@ $container->setShared('session', function () {
 /**
  * register db service using config file
  */
-$container->set(
-    'mongo',
-    function () {
-        $mongo = new \MongoDB\Client("mongodb://mongo", array("username" => 'root', "password" => 'password123'));
+$container->set('mongo', function () {
+        $mongo = new \MongoDB\Client(
+            'mongodb://mongo',
+            [
+                'username' => 'root',
+                'password' => 'password123'
+            ]
+        );
         return $mongo->store;
-    },
-    true
+    }, true
 );
 
 try {
     // Handle the request
     $response = $application->handle(
-        $_SERVER["REQUEST_URI"]
+        $_SERVER['REQUEST_URI']
     );
 
     $response->send();

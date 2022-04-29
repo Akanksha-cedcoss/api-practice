@@ -1,30 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 use Phalcon\Mvc\Model;
 
-class Users extends Model
+final class Users extends Model
 {
-    public $collection;
     /**
      * initializing mongo constructor
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
-        $this->collection = $this->di->get("mongo")->users;
+        $this->collection = $this->di->get('mongo')->users;
     }
-    public function getUserByEmailAndPassword($email, $password)
+    /**
+     * get user by email and password
+     *
+     * @param string $email
+     * @param string $password
+     * 
+     * @return array
+     */
+    public function getUserByEmailAndPassword(string $email, string $password): array
     {
-        return $this->collection->findOne(['email'=>$email], ['password'=>$password]);
+        return $this->collection->findOne(['email' => $email], ['password' => $password]);
     }
     /**
      * add new user to the database
      *
-     * @param [type] $product
+     * @param array $user
+     * 
      * @return void
      */
-    public function addNewUser($user)
+    public function addNewUser(array $user): void
     {
         $this->collection->insertOne($user);
     }

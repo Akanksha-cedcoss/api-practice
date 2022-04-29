@@ -1,42 +1,81 @@
 <?php
 
+declare(strict_types=1);
+
 use Phalcon\Mvc\Model;
 
-class Products extends Model
+final class Products extends Model
 {
-    public $collection;
     /**
      * initializing mongo constructor
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
-        $this->collection = $this->di->get("mongo")->products;
+        $this->collection = $this->di->get('mongo')->products;
     }
-    public function getProductById($product_id)
+    /**
+     * find product by product id
+     *
+     * @param int $product_id
+     * 
+     * @return object
+     */
+    public function getProductById(int $product_id): object
     {
-        return $this->collection->findOne(['_id' => new \MongoDB\BSON\ObjectID($product_id)]);
+        return $this->collection->findOne(
+            ['_id' => new \MongoDB\BSON\ObjectID($product_id)]
+        );
     }
     /**
      * get all products from db
      *
-     * @return object
+     * @return array
      */
-    public function getAllProducts()
+    public function getAllProducts(): array
     {
         return $this->collection->find();
     }
-    public function addNewProduct($product)
+    /**
+     * add new product to Product Collection
+     *
+     * @param object $product
+     * 
+     * @return bool
+     */
+    public function addNewProduct(int $product): bool
     {
         return $this->collection->insertOne($product)->getInsertedId();
     }
-    public function updateProductStock($product_id, $stock)
+    /**
+     * update product stock
+     *
+     * @param int $product_id
+     * @param int $stock
+     * 
+     * @return void
+     */
+    public function updateProductStock(int $product_id, int $stock): void
     {
-        $this->collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($product_id)], ['$set' =>['stock'=>$stock]]);
+        $this->collection->updateOne(
+            ['_id' => new MongoDB\BSON\ObjectID($product_id)],
+            ['$set' => ['stock' => $stock]],
+        );
     }
-    public function updateProductPrice($product_id, $price)
+    /**
+     * update product price
+     *
+     * @param int $product_id
+     * @param int $price
+     * 
+     * @return void
+     */
+    public function updateProductPrice(int $product_id, int $price): void
     {
-        $this->collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($product_id)], ['$set' =>['price'=>$price]]);
+        $this->collection->updateOne(
+            ['_id' => new MongoDB\BSON\ObjectID($product_id)],
+            ['$set' => ['price' => $price]],
+        );
     }
 }

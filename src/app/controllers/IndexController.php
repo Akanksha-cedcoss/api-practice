@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Phalcon\Mvc\Controller;
 
-
-class IndexController extends Controller
+final class IndexController extends Controller
 {
-
-    public function indexAction()
+    /**
+     * default controller
+     *
+     * @return void
+     */
+    public function indexAction(): void
     {
     }
-    
 }

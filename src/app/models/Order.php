@@ -1,25 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 use Phalcon\Mvc\Model;
 
-class Order extends Model
+final class Order extends Model
 {
-    public $collection;
     /**
      * initializing mongo constructor
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
-        $this->collection = $this->di->get("mongo")->order;
+        $this->collection = $this->di->get('mongo')->order;
     }
     /**
      * get all orders from db
      *
-     * @return object
+     * @return array
      */
-    public function getAllOrders()
+    public function getAllOrders(): array
     {
         return $this->collection->find();
     }

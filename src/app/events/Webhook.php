@@ -1,20 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
-use Exception as GlobalException;
-use Phalcon\Events\Event;
-use Phalcon\Di\Injectable;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Client;
-use Phalcon\Exception;
-use Product;
+use Phalcon\Di\Injectable;
+use Phalcon\Events\Event;
 use Webhooks;
-use Products;
-
 
 /**
- * event listener class
+ * event listener class for webhooks
  */
 class Webhook extends Injectable
 {
@@ -29,22 +25,31 @@ class Webhook extends Injectable
         Event $event,
         $component,
         $product
-    ) {
-        $webhook = new Webhooks;
+    ): void {
+        $webhook = new Webhooks();
+        /**
+         * get all wenhooks for new product update from Webhook collection
+         */
         $hook = $webhook->getWebhookByEvent('Product.add');
+        /**
+         * creating product array from product onject
+         */
         $product = json_decode(json_encode($product), true);
+        /**
+         * initializing default product id as objectID
+         */
         $product['_id'] = new \MongoDB\BSON\ObjectID($product['_id']['$oid']);
-        // echo "<pre>";
-        // die(print_r($product));
         if (!is_null($hook)) {
             $headers = [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ];
+            /**
+             * sending request to each url for new product update
+             */
             foreach ($hook as $huk) {
                 $client = new Client(['base_uri' => $huk->url]);
-                $res = $client->request('POST', "", ["headers" => $headers, 'body' => json_encode($product)]);
-                die($res);
+                $client->request('POST', "", ["headers" => $headers, 'body' => json_encode($product)]);
             }
         }
     }
@@ -59,14 +64,20 @@ class Webhook extends Injectable
         Event $event,
         $component,
         $data
-    ) {
-        $webhook = new Webhooks;
+    ): void {
+        $webhook = new Webhooks();
+        /**
+         * get all webhooks for product stock update
+         */
         $hook = $webhook->getWebhookByEvent('Product.stock');
         if (!is_null($hook)) {
             $headers = [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ];
+            /**
+             * sending request to each url
+             */
             foreach ($hook as $huk) {
                 $client = new Client(['base_uri' => $huk->url]);
                 $client->request('POST', "", ["headers" => $headers, 'body' => json_encode($data)]);
@@ -84,14 +95,20 @@ class Webhook extends Injectable
         Event $event,
         $component,
         $data
-    ) {
-        $webhook = new Webhooks;
+    ): void {
+        $webhook = new Webhooks();
+        /**
+         * getting all webhooks for product price update
+         */
         $hook = $webhook->getWebhookByEvent('Product.price');
         if (!is_null($hook)) {
             $headers = [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ];
+            /**
+             * sending request to each url
+             */
             foreach ($hook as $huk) {
                 $client = new Client(['base_uri' => $huk->url]);
                 $client->request('POST', "", ["headers" => $headers, 'body' => json_encode($data)]);
